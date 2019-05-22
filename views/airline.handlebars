@@ -1,0 +1,41 @@
+<html>
+<h3>Add new airline:</h3>
+<form id="addAirline" action="/airline" method="post">
+    Airline name: <input type="text" name="airline"><br>
+    Phone number: <input type="text" name="phone"><br>
+ </form>
+<br/>
+
+<form id='filter_airline' action='' method=''>
+<!--- this form does not submit directly, the button handles all the interaction with backend -->
+    <label> Filter by State </label>
+    <select id='state_filter' name="state"> 
+    </select><br>
+    <input type="button" value="Filter" onclick="filterAirlineByState()">
+</form>
+
+<form id='search_airline' action='' method=''>
+<!--- this form does not submit directly, the button handles all the interaction with backend -->
+    <label> Search airlines by name starting with:</label>
+    <input id='airline_search_string' type='text' name='airline_search_string' value=''>
+    <input type="button" value="Search" onclick="searchAirlineByName()">
+</form>
+
+<h3>Current Airlines:</h3>
+<table>
+    <thead> 
+        <th>Airline Name</th> 
+        <th>Phone Number</th> 
+    </thead> 
+    <tbody>
+        {{#each airline}} 
+        <tr> 
+            <td>{{airlinename}}</td> 
+            <td>{{phone}}</td> 
+            <td><button onclick="deleteAirline({{id}})">Delete</button></td>
+            <td><a href="/airline/{{id}}">Update</a></td>
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 
+</html>
