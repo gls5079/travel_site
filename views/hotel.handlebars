@@ -1,8 +1,9 @@
 <html>
 <h3>Add new hotel:</h3>
 <form id="addHotel" action="/hotel" method="post">
-    Hotel name: <input type="text" name="hotel"><br>
-    Phone number: <input type="text" name="phone"><br>
+    Hotel name: <input type="text" name="name"><br>
+    Phone number: <input type="text" name="phone_number"><br>
+	<input type="submit" value="Submit">
  </form>
 <br/>
 
@@ -30,8 +31,8 @@
     <tbody>
         {{#each hotel}} 
         <tr> 
-            <td>{{hotelname}}</td> 
-            <td>{{phone}}</td> 
+            <td>{{name}}</td> 
+            <td>{{phone_number}}</td> 
             <td><button onclick="deleteHotel({{id}})">Delete</button></td>
             <td><a href="/hotel/{{id}}">Update</a></td>
         </tr> 
