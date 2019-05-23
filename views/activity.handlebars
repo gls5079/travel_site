@@ -3,7 +3,7 @@
 <form id="addActivity" action="/activity" method="post">
     Activity name: <input type="text" name="name"><br>
     Phone number: <input type="text" name="phone_number"><br>
-	City: <select name='city_id'>
+    City: <select name='city_id'>
         {{#each city}}
           <option value='{{city_id}}'>{{name}}</option>
         {{/each}}
