@@ -43,7 +43,7 @@ module.exports = function(){
 				res.write(JSON.stringify(error));
 				res.end();
 			}else{
-				res.redirect('/explore-cities'); //Should this be /explore-cities.html?
+				res.redirect('/city'); //Should this be /explore-cities.html?
 			}
 		});
 	});

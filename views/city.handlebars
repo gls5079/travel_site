@@ -1,8 +1,9 @@
 <html>
 <h3>Add new city:</h3>
 <form id="addCity" action="/city" method="post">
-    City name: <input type="text" name="city"><br>
+    City name: <input type="text" name="name"><br>
     State: <input type="text" name="state"><br>
+    <input type="submit" value="Submit">
  </form>
 <br/>
 
@@ -30,11 +31,13 @@
     <tbody>
         {{#each city}} 
         <tr> 
-            <td>{{cityname}}</td> 
+            <td>{{name}}</td> 
             <td>{{state}}</td> 
             <td><button onclick="deleteCity({{id}})">Delete</button></td>
             <td><a href="/city/{{id}}">Update</a></td>
-        </tr> 
+        </tr>
+	{{else}}
+	<b> No cities are found in the database! Put some in using the form. </b>
         {{/each}} 
     </tbody> 
 </table> 
