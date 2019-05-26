@@ -5,7 +5,7 @@
     Phone number: <input type="text" name="phone_number"><br>
     City: <select name='city_id'>
         {{#each city}}
-          <option value='{{city_id}}'>{{name}}</option>
+          <option value='{{id}}'>{{name}}</option>
         {{/each}}
     </select>
     <br>
@@ -40,7 +40,7 @@
         <tr> 
             <td>{{name}}</td> 
             <td>{{phone_number}}</td>
-			<td>{{city}}</td> <!--- maybe change to city_id -->
+	    <td>{{cityName}}</td>
             <td><button onclick="deleteActivity({{id}})">Delete</button></td>
             <td><a href="/activity/{{id}}">Update</a></td>
         </tr> 

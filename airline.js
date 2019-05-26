@@ -4,8 +4,8 @@ module.exports = function(){
 	var router = express.Router();
 
 	//function to select airline information
-	function getAirline(res, mysql, context, id, complete){
-		mysql.pool.query("SELECT a.name, a.phone_number, ap.price FROM Airline a INNER JOIN Airline_Price ap ON a.id = ap.Airline_Id", function(error, results, fields){
+	function getAirline(res, mysql, context, complete){
+		mysql.pool.query("SELECT Airline.id, Airline.name, Airline.phone_number FROM Airline", function(error, results, fields){
 			if(error){
 				res.write(JSON.stringify(error));
 				res.end();
@@ -43,7 +43,7 @@ module.exports = function(){
 				res.write(JSON.stringify(error));
 				res.end();
 			}else{
-				res.redirect('/explore-airlines');
+				res.redirect('/airline');
 			}
 		});
 	});
@@ -60,7 +60,7 @@ module.exports = function(){
 				res.write(JSON.stringify(error));
 				res.end();
 			}else{
-				res.redirect('/explore-airlines'); //WHERE SHOULD THIS REDIRECT TO?
+				res.redirect('/airline'); //WHERE SHOULD THIS REDIRECT TO?
 			}
 		});
 	});
