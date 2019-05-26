@@ -1,7 +1,7 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `cs340_stanekg`.`Activities_Price`;
-DROP TABLE IF EXISTS `cs340_stanekg`.`Activities`;
+DROP TABLE IF EXISTS `cs340_stanekg`.`Activity`;
 DROP TABLE IF EXISTS `cs340_stanekg`.`Airline_Price`;
 DROP TABLE IF EXISTS `cs340_stanekg`.`Airline`;
 DROP TABLE IF EXISTS `cs340_stanekg`.`Trip_Criteria`;
@@ -51,7 +51,7 @@ FOREIGN KEY (`starting_city_id`) REFERENCES `City` (`id`) ON DELETE CASCADE ON U
 FOREIGN KEY (`ending_city_id`) REFERENCES `City` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `Activities`(
+CREATE TABLE `Activity`(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
 phone_number BIGINT(9) NOT NULL,

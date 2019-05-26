@@ -5,7 +5,7 @@ module.exports = function(){
 
 	//function to select city information
 	function getCity(res, mysql, context, complete){
-		mysql.pool.query("SELECT name, state FROM City", function(error, results, fields){
+		mysql.pool.query("SELECT id, name, state FROM City", function(error, results, fields){
 			if(error){
 				res.write(JSON.stringify(error));
 				res.end();
@@ -20,7 +20,7 @@ module.exports = function(){
 		var callbackCount = 0;
 		var context = {};
 		//This line is used to delete, filter, or search using AJAX
-		context.jscripts = ["deletecity.js", "filtercity.js", "searchcity.js"];
+		context.jsscripts = ["deletecity.js", "filtercity.js", "searchcity.js"];
 		var mysql = req.app.get('mysql');
 		getCity(res, mysql, context, complete);
 		function complete(){
@@ -43,10 +43,28 @@ module.exports = function(){
 				res.write(JSON.stringify(error));
 				res.end();
 			}else{
-				res.redirect('/explore-cities'); //Should this be /explore-cities.html?
+				res.redirect('/city'); //Should this be /explore-cities.html?
 			}
 		});
 	});
+
+	/*Route ot delete a city.*/
+	router.delete('/:id', function(req,res){
+		var mysql = req.app.get('mysql');
+		var sql = "DELETE FROM City WHERE id = ?";
+		var inserts = [req.params.id];
+		sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+			if(error){
+				console.log(error)
+				res.write(JSON.stringify(error));
+				res.status(400);
+				res.end();
+			}else{
+				res.status(202).end();
+			}
+		})
+	})
+
 	
 	return router;
 }();

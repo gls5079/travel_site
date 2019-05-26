@@ -5,7 +5,7 @@ module.exports = function(){
 
 	//function to select hotel information
 	function getHotel(res, mysql, context, complete){
-		mysql.pool.query("SELECT h.name, h.phone_number, hp.price FROM Hotel h INNER JOIN Hotel_Price hp ON h.id = hp.Hotel_Id", function(error, results, fields){
+		mysql.pool.query("SELECT Hotel.id, Hotel.name, Hotel.phone_number FROM Hotel", function(error, results, fields){
 			if(error){
 				res.write(JSON.stringify(error));
 				res.end();
@@ -35,35 +35,18 @@ module.exports = function(){
 	router.post('/', function(req, res){
 		console.log(req.body)
 		var mysql = req.app.get('mysql');
-		var sql = "INSERT INTO City (hotel_id, book_date, price) VALUES (?,?,?)";
-		var inserts = [req.body.hotel_id, req.body.book_date, req.body.price];
+		var sql = "INSERT INTO Hotel (name, phone_number) VALUES (?,?)";
+		var inserts = [req.body.name, req.body.phone_number];
 		sql = mysql.pool.query(sql,inserts,function(error, results, fields){
 			if(error){
 				console.log(JSON.stringify(error))
 				res.write(JSON.stringify(error));
 				res.end();
 			}else{
-				res.redirect('/explore-hotels'); //WHERE SHOULD THIS REDIRECT TO?
+				res.redirect('/hotel'); //WHERE SHOULD THIS REDIRECT TO?
 			}
 		});
 	});
 
-	/* Adds a hotel price, then redirects back to the ????? page*/
-	router.post('/', function(req, res){
-		console.log(req.body)
-		var mysql = req.app.get('mysql');
-		var sql = "INSERT INTO City (hotel_id, book_date, price) VALUES (?,?,?)";
-		var inserts = [req.body.hotel_id, req.body.book_date, req.body.price];
-		sql = mysql.pool.query(sql,inserts,function(error, results, fields){
-			if(error){
-				console.log(JSON.stringify(error))
-				res.write(JSON.stringify(error));
-				res.end();
-			}else{
-				res.redirect('/explore-hotels'); //WHERE SHOULD THIS REDIRECT TO?
-			}
-		});
-	});
-	
 	return router;
 }();

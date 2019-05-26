@@ -5,7 +5,7 @@ module.exports = function(){
 
 	//function to select activity information
 	function getActivity(res, mysql, context, complete){
-		mysql.pool.query("SELECT a.name, a.phone_number, ap.price FROM Activity a INNER JOIN Activity_Price ap ON a.id = ap.Activity_Id", function(error, results, fields){
+		mysql.pool.query("SELECT Activity.name, Activity.phone_number, City.name as cityName FROM Activity INNER JOIN City ON Activity.city_id = City.id", function(error, results, fields){
 			if(error){
 				res.write(JSON.stringify(error));
 				res.end();
@@ -15,6 +15,19 @@ module.exports = function(){
 		});
 	}	
 	
+	//function to get list of cities
+	function getCityList(res, mysql, context, complete){
+		mysql.pool.query("SELECT id, name FROM City", function(error, results, fields){
+			if(error){
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			context.city = results;
+			complete();
+		});
+	}
+	
+
 	//display activities
 	router.get('/', function(req, res){
 		var callbackCount = 0;
@@ -23,9 +36,10 @@ module.exports = function(){
 		context.jscripts = ["deleteactivity.js", "filteractivity.js", "searchactivity.js"];
 		var mysql = req.app.get('mysql');
 		getActivity(res, mysql, context, complete);
+		getCityList(res, mysql, context, complete);
 		function complete(){
 			callbackCount++;
-			if(callbackCount >= 1){
+			if(callbackCount >= 2){
 				res.render('activity', context);
 			}
 		}
@@ -35,7 +49,7 @@ module.exports = function(){
 	router.post('/', function(req, res){
 		console.log(req.body)
 		var mysql = req.app.get('mysql');
-		var sql = "INSERT INTO Airline (name, phone_number, city_id) VALUES (?,?,?)";
+		var sql = "INSERT INTO Activity (name, phone_number, city_id) VALUES (?,?,?)";
 		var inserts = [req.body.name, req.body.phone_number, req.body.city_id];
 		sql = mysql.pool.query(sql,inserts,function(error, results, fields){
 			if(error){
@@ -43,7 +57,7 @@ module.exports = function(){
 				res.write(JSON.stringify(error));
 				res.end();
 			}else{
-				res.redirect('/explore-activities');
+				res.redirect('/activity');
 			}
 		});
 	});
@@ -61,7 +75,7 @@ module.exports = function(){
 				res.write(JSON.stringify(error)); 	
 				res.end();
 			}else{
-				res.redirect('/explore-activities'); //WHERE SHOULD THIS REDIRECT TO?
+				res.redirect('/activity'); //WHERE SHOULD THIS REDIRECT TO?
 			}
 		});
 	});

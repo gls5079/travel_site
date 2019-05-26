@@ -1,8 +1,15 @@
 <html>
 <h3>Add new activity:</h3>
 <form id="addActivity" action="/activity" method="post">
-    Activity name: <input type="text" name="activity"><br>
-    Phone number: <input type="text" name="phone"><br>
+    Activity name: <input type="text" name="name"><br>
+    Phone number: <input type="text" name="phone_number"><br>
+    City: <select name='city_id'>
+        {{#each city}}
+          <option value='{{id}}'>{{name}}</option>
+        {{/each}}
+    </select>
+    <br>
+	<input type="submit" value="Submit">
  </form>
 <br/>
 
@@ -25,16 +32,19 @@
 <table>
     <thead> 
         <th>Activity Name</th> 
-        <th>Phone Number</th> 
+        <th>Phone Number</th>
+		<th>City</th>
     </thead> 
     <tbody>
         {{#each activity}} 
         <tr> 
-            <td>{{activityname}}</td> 
-            <td>{{phone}}</td> 
+            <td>{{name}}</td> 
+            <td>{{phone_number}}</td>
+	    <td>{{cityName}}</td>
             <td><button onclick="deleteActivity({{id}})">Delete</button></td>
             <td><a href="/activity/{{id}}">Update</a></td>
         </tr> 
         {{/each}} 
     </tbody> 
 </table> 
+</html>
