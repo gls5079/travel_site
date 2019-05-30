@@ -37,16 +37,13 @@
 <form id='filter_city' action='' method=''>
 <!--- this form does not submit directly, the button handles all the interaction with backend -->
     <label> Filter by State </label>
-    <select id='state_filter' name="state"> 
-    </select><br>
-    <input type="button" value="Filter" onclick="filterCityByState()">
-</form>
+    <select id='state_filter' name='state'> 
+    	{{#each state}}
+	<option value='{{state}}'>{{state}}</option>
+	{{/each}}
 
-<form id='search_city' action='' method=''>
-<!--- this form does not submit directly, the button handles all the interaction with backend -->
-    <label> Search cities by name starting with:</label>
-    <input id='city_search_string' type='text' name='city_search_string' value=''>
-    <input type="button" value="Search" onclick="searchCityByName()">
+    </select><br>
+    <input type="button" value="Filter" onclick="filterCity()">
 </form>
 
 <h3>Current Cities:</h3>
