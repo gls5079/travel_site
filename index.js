@@ -23,6 +23,12 @@ app.use('/city', require('./city.js'));
 app.use('/hotel', require('./hotel.js'));
 app.use('/airline', require('./airline.js'));
 app.use('/activity', require('./activity.js'));
+app.use('/traveler', require('./traveler.js'));
+app.use('/hotelprice', require('./hotelprice.js'));
+app.use('/airlineprice', require('./airlineprice.js'));
+app.use('/activityprice', require('./activityprice.js'));
+app.use('/tripcriteria', require('./tripcriteria.js'));
+app.use('/destinationtype', require('./destinationtype.js'));
 app.use('/', express.static('public'));
 
 app.use(function(req,res){

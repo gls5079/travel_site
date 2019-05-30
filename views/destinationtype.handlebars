@@ -1,9 +1,9 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>What's Your Six? | Cities</title>
+	<title>What's Your Six? | Destination Types</title>
 	<link href = '../style.css' rel = 'stylesheet' type = 'text/css'>
-</head>
+	</head>
 <body>
   <h2>What's Your Six Group's Database. </h2>
   <h4> Menu of operations</h4>
@@ -24,47 +24,34 @@
     
   </ul>
   <br/>
-
-
-<h3>Add new city:</h3>
-<form id="addCity" action="/city" method="post">
-    City name: <input type="text" name="name"><br>
-    State: <input type="text" name="state"><br>
+<h3>Add destination type to a city:</h3>
+<form id="adddestinationtype" action="/destinationtype" method="post">
+    City: <select name='city_id'>
+        {{#each cities}}
+          <option value='{{id}}'>{{name}}</option>
+        {{/each}}
+    </select>
+	Type: <input type="text" name="type"><br>
 	<input type="submit" value="Submit">
  </form>
 <br/>
 
-<form id='filter_city' action='' method=''>
-<!--- this form does not submit directly, the button handles all the interaction with backend -->
-    <label> Filter by State </label>
-    <select id='state_filter' name="state"> 
-    </select><br>
-    <input type="button" value="Filter" onclick="filterCityByState()">
-</form>
-
-<form id='search_city' action='' method=''>
-<!--- this form does not submit directly, the button handles all the interaction with backend -->
-    <label> Search cities by name starting with:</label>
-    <input id='city_search_string' type='text' name='city_search_string' value=''>
-    <input type="button" value="Search" onclick="searchCityByName()">
-</form>
-
-<h3>Current Cities:</h3>
+<h3>Current Cities Destinations:</h3>
 <table>
     <thead> 
         <th>City Name</th> 
-        <th>State</th> 
+        <th>Type</th> 
     </thead> 
     <tbody>
-        {{#each city}} 
+        {{#each destination_type}} 
         <tr> 
             <td>{{name}}</td> 
-            <td>{{state}}</td> 
-            <td><button onclick="deleteCity({{id}})">Delete</button></td>
-            <td><a href="/city/{{id}}">Update</a></td>
+            <td>{{type}}</td> 
+            <td><button onclick="deleteDestinationType({{id}})">Delete</button></td>
+            <td><a href="/destinationtype/{{id}}">Update</a></td>
         </tr> 
-	{{else}}
-	<b> No cities are found in the database! Put some in using the form. </b>
+		{{else}}
+		<b> No cities are found in the database! Put some in using the form. </b>
         {{/each}} 
     </tbody> 
 </table> 

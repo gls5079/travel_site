@@ -1,0 +1,100 @@
+h1{
+	text-align: left;
+	text-indent: 25px;
+	font-size: 400%;
+}
+
+.greenHead{
+	color: #32CD32;
+	background-color: white;
+}
+
+.menu{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: yellow;
+}
+
+.homeButton{
+	float: left;
+	background-color: green;
+	font-size: 60%;
+	font-style: normal;
+	font-color: black;
+}
+
+.menuButton{
+	float: left;
+	background-color: yellow;
+	font-size: 60%;
+	font-style: normal;
+	font-color: black;
+}
+
+li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: orange;
+}
+
+.photoBox {
+	border-style: solid;
+	border-width: 1px;
+	background-color: #666666;
+	margin: auto;
+	width: 50%;
+	left: 25%;
+	
+}
+
+div img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.photo{
+	display: none;
+}
+
+.nextPhoto{
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 2s;
+	animation-name: fade;
+	animation-duration: 2s;
+}
+
+
+@-webkit-keyframes fade {
+	from {opacity: .4}
+	to {opacity: 1}
+}
+
+@keyframes fade {
+	from {opacity: .4}
+	to {opacity: 1}
+}
+
+.adventureTitle{
+	text-align: center;
+	color: #32CD32;
+}
+
+.adventureDate{
+	text-align: center;
+}
+
+.downloadButton {
+	text-align: center;
+	background-color: #32CD32;
+	font-style: normal;
+	text-decoration: none;
+	color: white;
+}
