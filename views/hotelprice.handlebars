@@ -1,10 +1,9 @@
 <html>
-
 <head>
 	<meta charset="utf-8">
-	<title>What's Your Six? | Cities</title>
+	<title>What's Your Six? | Hotel Prices</title>
 	<link href = '../style.css' rel = 'stylesheet' type = 'text/css'>
-</head>
+	</head>
 <body>
   <h2>What's Your Six Group's Database. </h2>
   <h4> Menu of operations</h4>
@@ -21,52 +20,38 @@
 	<li class = "menuButton"> <a href='/tripcriteria'>List & Add Trip Criteria</a></li>
 	<li class = "menuButton"> <a href='/destinationtype'>List & Add Destination Types</a></li>
 	<br>
+	
+    
   </ul>
   <br/>
-
-<h3>Add new hotel:</h3>
-<form id="addHotel" action="/hotel" method="post">
-    Hotel name: <input type="text" name="name"><br>
-    Phone number: <input type="text" name="phone_number"><br>
-    City: <select name='city_id'>
-        {{#each cities}}
+<h3> Associate Price(s) with a Hotel </h3>
+<form id="addhotelprices" action="/hotelprice" method="post">
+    Hotel: <select name='hotel_id'>
+        {{#each hotel}}
           <option value='{{id}}'>{{name}}</option>
         {{/each}}
     </select>
-
-	<input type="submit" value="Submit">
- </form>
+	<br>
+	Book date: <input type="date" name="book_date"><br>
+    Price: <input type="number" value="1000" min="0" step="0.01" name="price"><br>
+    <input type="submit" value="Submit"><
+	</form>
 <br/>
 
-<form id='filter_hotel' action='' method=''>
-<!--- this form does not submit directly, the button handles all the interaction with backend -->
-    <label> Filter by State </label>
-    <select id='state_filter' name="state"> 
-    </select><br>
-    <input type="button" value="Filter" onclick="filterHotelByState()">
-</form>
-
-<form id='search_hotel' action='' method=''>
-<!--- this form does not submit directly, the button handles all the interaction with backend -->
-    <label> Search hotels by name starting with:</label>
-    <input id='hotel_search_string' type='text' name='hotel_search_string' value=''>
-    <input type="button" value="Search" onclick="searchHotelByName()">
-</form>
-
-<h3>Current Hotels:</h3>
+<h3>Current Prices:</h3>
 <table>
     <thead> 
         <th>Hotel Name</th> 
-        <th>Phone Number</th>
-	<th>City</th> 
+        <th>Book Date</th>
+		<th>Price</th>
     </thead> 
     <tbody>
-        {{#each hotel}} 
+        {{#each hotel_price}} 
         <tr> 
             <td>{{name}}</td> 
-            <td>{{phone_number}}</td> 
-	    <td>{{cityName}}</td>
-            <td><button onclick="deleteHotel({{id}})">Delete</button></td>
+            <td>{{book_date}}</td>
+			<td>{{price}}</td>
+            <td><button onclick="deleteHotelPrice({{hotel_id}})">Delete</button></td>
             <td><a href="/hotel/{{id}}">Update</a></td>
         </tr> 
         {{/each}} 

@@ -5,7 +5,7 @@ module.exports = function(){
 
 	//function to select airline information
 	function getAirline(res, mysql, context, complete){
-		mysql.pool.query("SELECT Airline.id, Airline.name, Airline.phone_number FROM Airline", function(error, results, fields){
+		mysql.pool.query("SELECT id, name, phone_number FROM Airline", function(error, results, fields){
 			if(error){
 				res.write(JSON.stringify(error));
 				res.end();
@@ -14,13 +14,26 @@ module.exports = function(){
 			complete();
 		});
 	}	
+
+	function getAirlineInfo(res, mysql, context, id, complete){
+		var sql = "SELECT id, name, phone_number FROM Airline WHERE id = ?";
+		var inserts = [id];
+		mysql.pool.query(sql, inserts, function(error, results, fields){
+			if(error){
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			context.airline = results[0];
+			complete();
+		});
+	}
 	
 	//display airline
 	router.get('/', function(req, res){
 		var callbackCount = 0;
 		var context = {};
 		//This line is used to delete, filter, or search using AJAX
-		context.jscripts = ["deleteairline.js", "filterairline.js", "searchairline.js"];
+		context.jsscripts = ["delete.js", "filter.js", "search.js"];
 		var mysql = req.app.get('mysql');
 		getAirline(res, mysql, context, complete);
 		function complete(){
@@ -31,6 +44,43 @@ module.exports = function(){
 		}
 	});
 	
+	//display single airline for pudating attributes
+	router.get('/:id', function(req, res){
+		var callbackCount = 0;
+		var context = {};
+		context.jsscripts = ["update.js"];
+		var mysql = req.app.get('mysql');
+		getAirlineInfo(res, mysql, context, req.params.id, complete);
+		function complete(){
+			callbackCount++;
+			if(callbackCount >= 1){
+				res.render('update-airline', context);
+			}
+
+		}
+	});
+
+	//send updated attributes and redirect to airline page
+	
+        router.put('/:id', function(req, res){
+		var mysql = req.app.get('mysql');
+		console.log(req.body)
+		console.log(req.params.id)
+		var sql = "UPDATE Airline SET name=?, phone_number=? WHERE id=?";
+		var inserts = [req.body.name, req.body.phone_number, req.params.id];
+		sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+			if(error){
+				console.log(error)
+				res.write(JSON.stringify(error));
+				res.end();
+			}else{
+				res.status(200);
+				res.end();
+			}
+		});
+	});
+
+
 	/* Adds an airline, then redirects back to the explore-airlines page*/
 	router.post('/', function(req, res){
 		console.log(req.body)
@@ -48,22 +98,23 @@ module.exports = function(){
 		});
 	});
 
-/* Adds an airline price, then redirects back to the ????? page*/
-	router.post('/', function(req, res){
-		console.log(req.body)
+
+	//route to delete airline
+	router.delete('/:id', function(req,res){
 		var mysql = req.app.get('mysql');
-		var sql = "INSERT INTO Airline_price (airline_id, starting_city_id, ending_city_id, flight_date, price) VALUES (?,?,?,?,?)";
-		var inserts = [req.body.airline_id, req.body.starting_city_id, req.body.ending_city_id, req.body.flight_date, req.body.price];
-		sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+		var sql = "DELETE FROM Airline WHERE id = ?";
+		var inserts = [req.params.id];
+		sql = mysql.pool.query(sql, inserts, function(error, results, fields){
 			if(error){
-				console.log(JSON.stringify(error))
+				console.log(error)
 				res.write(JSON.stringify(error));
+				res.status(400);
 				res.end();
 			}else{
-				res.redirect('/airline'); //WHERE SHOULD THIS REDIRECT TO?
+				res.status(202).end();
 			}
-		});
-	});
+		})
+	})
 	
 	return router;
 }();
