@@ -15,6 +15,18 @@ module.exports = function(){
 		});
 	}	
 
+	//get states
+	function getState(res, mysql, context, complete){
+		mysql.pool.query("SELECT c.id, c.name, c.state FROM City c GROUP BY c.state", function(error, results, fields){
+			if(error){
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			context.state = results;
+			complete();
+		});
+	}
+
 	//display single city attributes for update
 	function getCityInfo(res, mysql, context, id, complete){
 		var sql = "SELECT c.id, c.name, c.state FROM City c WHERE c.id = ?";
@@ -29,7 +41,20 @@ module.exports = function(){
 		});
 	}
 
-
+	//display specific state cities
+	function filterCityByState(req, res, mysql, context, complete){
+		var query = "SELECT c.id, c.name, c.state FROM City c WHERE c.state = ?";
+		console.log(req.params);
+		var inserts = [req.params.state];
+		mysql.pool.query(query, inserts, function(error, results, fields){
+			if(error){
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			context.city = results;
+			complete();
+		});
+	}
 	
 	//display cities
 	router.get('/', function(req, res){
@@ -39,13 +64,31 @@ module.exports = function(){
 		context.jsscripts = ["delete.js", "filter.js", "search.js"];
 		var mysql = req.app.get('mysql');
 		getCity(res, mysql, context, complete);
+		getState(res, mysql, context, complete)
 		function complete(){
 			callbackCount++;
-			if(callbackCount >= 1){
+			if(callbackCount >= 2){
 				res.render('city', context);
 			}
 		}
 	});
+
+	//filter city
+	router.get('/filter/:state', function(req, res){
+		var callbackCount = 0;
+		var context = {};
+		context.jsscripts = ["delete.js", "filter.js", "search.js"];
+		var mysql = req.app.get('mysql');
+		filterCityByState(req, res, mysql, context, complete);		
+		getState(res, mysql, context, complete);
+		function complete(){
+			callbackCount++;
+			if(callbackCount >= 2){
+				res.render('city', context);
+			}
+		}
+	});
+
 
 	//Display single city for update city attriubtes
 	router.get('/:id', function(req, res){

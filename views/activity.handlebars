@@ -42,18 +42,12 @@
 
 <form id='filter_activity' action='' method=''>
 <!--- this form does not submit directly, the button handles all the interaction with backend -->
-    <label> Filter by State </label>
-    <select id='state_filter' name="state"> 
+    <label> Filter by City </label>
+    <select id='city_filter' name="city"> 
     </select><br>
-    <input type="button" value="Filter" onclick="filterActivityByState()">
+    <input type="button" value="Filter" onclick="filterActivity()">
 </form>
 
-<form id='search_activity' action='' method=''>
-<!--- this form does not submit directly, the button handles all the interaction with backend -->
-    <label> Search activitys by name starting with:</label>
-    <input id='activity_search_string' type='text' name='activity_search_string' value=''>
-    <input type="button" value="Search" onclick="searchActivityByName()">
-</form>
 
 <h3>Current Activities:</h3>
 <table>
