@@ -1,0 +1,32 @@
+<html>
+<head>
+		<meta charset="utf-8">
+		<title>What's Your Six? | Update Hotel Prices</title>
+		<link href = '../style.css' rel = 'stylesheet' type = 'text/css'>
+	</head>
+<body>
+  <h2>What's Your Six Group's Database. </h2>
+  <h4> Menu of operations</h4>
+   <ul class = "menu">
+	<li class = "homeButton"> <a href='/'>Home</a></li>
+	<li class = "menuButton"> <a href='/city'>List & Add Cities</a></li>
+    <li class = "menuButton"> <a href='/activity'>List & Add Activities</a></li>
+	<li class = "menuButton"> <a href='/hotel'>List & Add Hotels</a></li>
+    <li class = "menuButton"> <a href='/airline'>List & Add Airlines</a></li>
+	<li class = "menuButton"> <a href='/traveler'>List & Add Travelers</a></li>
+	<li class = "menuButton"> <a href='/activityprice'>List & Add Activity Prices</a></li>
+	<li class = "menuButton"> <a href='/hotelprice'>List & Add Hotel Prices</a></li>
+	<li class = "menuButton"> <a href='/airlineprice'>List & Add Airline Prices</a></li>
+	<li class = "menuButton"> <a href='/tripcriteria'>List & Add Trip Criteria</a></li>
+	<li class = "menuButton"> <a href='/destinationtype'>List & Add Destination Types</a></li>
+	<br>
+  </ul>
+  <br/>
+<h3>Update {{hotel.name}}'s Prices:</h3> <!-- THIS NEEDS FIXED SO HANDLEBARS RENDERS IT -->
+<form id="update-hotelprice" action="/hotel" method="post">
+    Hotel Name: {{name}} <br> <!-- THIS NEEDS FIXED SO HANDLEBARS RENDERS IT -->
+    Book Date: <input type="date" name="book_date" }"><br> <!-- THIS NEEDS FIXED SO HANDLEBARS RENDERS IT -->
+	Price: <input type="number" name="price" value="{{hotel_price.price}}"><br>
+</select><br>
+</form>
+<button onclick="updateHotelPrice({{hotel_price.id}});">Update</button>
