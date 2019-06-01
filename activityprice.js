@@ -15,6 +15,20 @@ module.exports = function(){
 		});
 	}
 	
+	//function to select one activity price information in order to update it
+	function getActivityPrice(res, mysql, context, id, complete){
+		var sql = "SELECT ap.id, ap.activity_id, ap.book_date, ap.price FROM Activities_Price ap WHERE ap.id = ?";
+		var inserts = [id];
+		mysql.pool.query(sql, inserts, function(error, results, fields){
+			if(error){
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			context.activity_price = results[0];
+			complete();
+		});
+	}
+	
 	//function to select activity information
 	function getActivities(res, mysql, context, complete){
 		mysql.pool.query("SELECT a.id, a.name, a.phone_number, a.city_id FROM Activity a", function(error, results, fields){
@@ -42,6 +56,42 @@ module.exports = function(){
 			res.render('activityprice', context);
 			}
 		}
+	});
+	
+	//Displays a single activity price in order to update the activyty price attributes
+	router.get('/:id', function(req, res){
+		var callbackCount = 0;
+		var context = {};
+		context.jsscripts = ["select.js", "update.js"];
+		var mysql = req.app.get('mysql');
+		getActivityPrice(res, mysql, context, req.params.id, complete);
+		getActivities(res, mysql, context, complete)
+		function complete(){
+			callbackCount++;
+			if(callbackCount >= 2){
+				res.render('update-activityprice', context);
+			}
+
+		}
+	});
+	
+	//Sends updated attributes and redirects to the activity price page
+	router.put('/:id', function(req, res){
+		var mysql = req.app.get('mysql');
+		console.log(req.body)
+		console.log(req.params.id)
+		var sql = "UPDATE Activities_Price ap SET ap.book_date=?, ap.price=? WHERE ap.id=?";
+		var inserts = [req.body.book_date, req.body.price, req.params.id];
+		sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+			if(error){
+				console.log(error)
+				res.write(JSON.stringify(error));
+				res.end();
+			}else{
+				res.status(200);
+				res.end();
+			}
+		});
 	});
 
 	//adds price, then redirects back to activity price
