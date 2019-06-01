@@ -27,13 +27,13 @@
 
 <h3>Add new traveler:</h3>
 <form id="addTraveler" action="/traveler" method="post">
-    Traveler name: <input type="text" name="traveler"><br>
-    Street: <input type="text" name="street"><br>
-	City: <input type="text" name="city"><br>
-	State: <input type="text" name="state"><br>
-	Zip Code: <input type="text" name="zipCode"><br>
-	Email: <input type="text" name="email"><br>
-	Phone: <input type="text" name="phone"><br>
+    Traveler name: <input type="text" name="traveler" maxlength="50"><br>
+    Street: <input type="text" name="street" maxlength="100"><br>
+	City: <input type="text" name="city" maxlength="48"><br>
+	State: <input type="text" name="state" maxlength="2"><br>
+	Zip Code: <input type="number" name="zipCode" min="11111" max="99999"><br>
+	Email: <input type="text" name="email" maxlength="50"><br>
+	Phone: <input type="number" name="phone" min="1000000000" max="9999999999"><br>
  </form>
 <br/>
 
