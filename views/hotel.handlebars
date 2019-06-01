@@ -26,8 +26,8 @@
 
 <h3>Add new hotel:</h3>
 <form id="addHotel" action="/hotel" method="post">
-    Hotel name: <input type="text" name="name"><br>
-    Phone number: <input type="text" name="phone_number"><br>
+    Hotel name: <input type="text" name="name" maxlength="50"><br>
+    Phone number: <input type="text" name="phone_number" min="1000000000" max="9999999999"><br>
     City: <select name='city_id'>
         {{#each cities}}
           <option value='{{id}}'>{{name}}</option>
