@@ -1,0 +1,45 @@
+<html>
+<head>
+		<meta charset="utf-8">
+		<title>What's Your Six? | Update Trip Criteria</title>
+		<link href = '../style.css' rel = 'stylesheet' type = 'text/css'>
+	</head>
+<body>
+  <h2>What's Your Six Group's Database. </h2>
+  <h4> Menu of operations</h4>
+   <ul class = "menu">
+	<li class = "homeButton"> <a href='/'>Home</a></li>
+	<li class = "menuButton"> <a href='/city'>List & Add Cities</a></li>
+    <li class = "menuButton"> <a href='/activity'>List & Add Activities</a></li>
+	<li class = "menuButton"> <a href='/hotel'>List & Add Hotels</a></li>
+    <li class = "menuButton"> <a href='/airline'>List & Add Airlines</a></li>
+	<li class = "menuButton"> <a href='/traveler'>List & Add Travelers</a></li>
+	<li class = "menuButton"> <a href='/activityprice'>List & Add Activity Prices</a></li>
+	<li class = "menuButton"> <a href='/hotelprice'>List & Add Hotel Prices</a></li>
+	<li class = "menuButton"> <a href='/airlineprice'>List & Add Airline Prices</a></li>
+	<li class = "menuButton"> <a href='/tripcriteria'>List & Add Trip Criteria</a></li>
+	<li class = "menuButton"> <a href='/destinationtype'>List & Add Destination Types</a></li>
+	<br>
+  </ul>
+  <br/>
+<h3>Update {{trip_criteria.trav_name}}'s Attributes:</h3>
+<form id="update-tripcriteria" action="/tripcriteria" method="post">
+    Starting City: <select name="starting_city_id" id="city-selector"> 
+        {{#each cities}}
+          <option value='{{id}}'>{{name}}</option>
+        {{/each}}
+</select><br>
+    Start Date: <input type="date" name="start_date"><br>
+	End Date: <input type="date" name="end_date"><br>
+	Max Budget: <input type="number" name="max_budget" value="{{trip_criteria.max_budget}}" min="0"><br>
+	Destination Type: <select name="destination_type_id" id="destination-type-selector">
+        {{#each destination_type}}
+          <option value='{{id}}'>{{type}}</option>
+        {{/each}}
+</select><br>
+</form>
+<button onclick="updateTripCriteria({{trip_criteria.id}});">Update</button>
+<script defer>selectCity({{trip_criteria.starting_city_id}});</script>
+<script defer>selectDestinationType({{trip_criteria.destination_type_id}});</script>
+</html>
+
